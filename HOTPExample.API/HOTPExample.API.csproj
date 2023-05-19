@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HOTPExample.Application\HOTPExample.Application.csproj" />
+    <ProjectReference Include="..\HOTPExample.Contract\HOTPExample.Contract.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HOTPExample.Application", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F2332DFB-175F-48BE-B220-B251CE137394}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HOTPExample.Contract", "HOTPExample.Contract\HOTPExample.Contract.csproj", "{0C16543B-7ADF-44E6-842E-957C11900379}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{BB5D2A1B-2CF9-484F-8EA2-29B03B0EDA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB5D2A1B-2CF9-484F-8EA2-29B03B0EDA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB5D2A1B-2CF9-484F-8EA2-29B03B0EDA7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C16543B-7ADF-44E6-842E-957C11900379}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C16543B-7ADF-44E6-842E-957C11900379}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C16543B-7ADF-44E6-842E-957C11900379}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C16543B-7ADF-44E6-842E-957C11900379}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{309B95A0-9259-4755-B0C7-AD82BACE0046} = {F2332DFB-175F-48BE-B220-B251CE137394}
 		{BB5D2A1B-2CF9-484F-8EA2-29B03B0EDA7E} = {F2332DFB-175F-48BE-B220-B251CE137394}
+		{0C16543B-7ADF-44E6-842E-957C11900379} = {F2332DFB-175F-48BE-B220-B251CE137394}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA60BDED-8B60-484E-8B80-5B25426829A8}

@@ -1,6 +1,7 @@
 ﻿using HOTPExample.Application.Settings;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,17 +13,19 @@ namespace HOTPExample.Application.HOTP
         private readonly IMemoryCache _memoryCache;
         private OtpSettings _otpSettings = new();
         private long _counter = 0;
+        private string _loggedUser;
+        private readonly string _cacheCounter = "CounterCache";
         public HOTPGeneratorService(IConfiguration configuration, IMemoryCache memoryCache)
         {
             _configuration = configuration;
             _memoryCache = memoryCache;
         }
 
-        public string GenerateOTP()
+        public string GenerateOTP(string username)
         {
             _configuration.GetSection("OtpSettings").Bind(_otpSettings);
             var _secretKey = Encoding.ASCII.GetBytes(_otpSettings.SecretKey);
-            _memoryCache.TryGetValue("CounterCache", out _counter);
+            _memoryCache.TryGetValue(_cacheCounter, out _counter);
 
             using var hmac = new HMACSHA1(_secretKey);
             byte[] counterBytes = BitConverter.GetBytes(_counter);
@@ -38,7 +41,28 @@ namespace HOTPExample.Application.HOTP
 
             int otp = binary % (int)Math.Pow(10, _otpSettings.Digit);
 
-            return otp.ToString().PadLeft(_otpSettings.Digit, '0');
+            var finalOtp = otp.ToString().PadLeft(_otpSettings.Digit, '0');
+            _memoryCache.Set(username,finalOtp,TimeSpan.FromSeconds(30));
+            return finalOtp;
+        }
+
+        public bool VerifyOTP(string otp, string username)
+        {
+            _memoryCache.TryGetValue(_cacheCounter, out _counter);
+            string otpCache;
+            if (_memoryCache.TryGetValue("LoggedUser", out _loggedUser))
+            {
+                if (_memoryCache.TryGetValue(_loggedUser, out otpCache))
+                {
+                    if (string.Equals(otp, otpCache))
+                    {
+                        _memoryCache.Set(_cacheCounter, _counter++);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false;
         }
     }
 }
