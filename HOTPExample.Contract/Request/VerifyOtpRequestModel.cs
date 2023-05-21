@@ -2,6 +2,6 @@
 {
     public class VerifyOtpRequestModel
     {
-
+        public string Otp { get; set; }
     }
 }

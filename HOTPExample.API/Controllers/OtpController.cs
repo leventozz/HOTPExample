@@ -26,10 +26,10 @@ namespace HOTPExample.API.Controllers
         }
 
         [HttpPost("VerifyOtp")]
-        public IActionResult VerifyOtp(string otp)
+        public IActionResult VerifyOtp(VerifyOtpRequestModel requestModel)
         {
             string loggedUsername = _memoryCache.Get("LoggedUser")?.ToString();
-            bool verified = _generatorService.VerifyOTP(otp, loggedUsername);
+            bool verified = _generatorService.VerifyOTP(requestModel.Otp, loggedUsername);
             if(verified)
                 return Ok("OTP Verified");
             return BadRequest("OTP Not Verified");
