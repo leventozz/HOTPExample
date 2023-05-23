@@ -6,6 +6,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IHOTPGeneratorService, HOTPGeneratorService>();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
