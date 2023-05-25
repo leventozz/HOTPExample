@@ -17,7 +17,7 @@ namespace HOTPExample.API.Controllers
             _memoryCache = memoryCache;
         }
 
-        [HttpGet("GetOtp")]
+        [HttpPost("GetOtp")]
         public IActionResult GetOTP(GetOtpRequestModel requestModel)
         {
             string otp = _generatorService.GenerateOTP(requestModel.Username);

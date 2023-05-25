@@ -13,7 +13,6 @@ namespace HOTPExample.Application.HOTP
         private readonly IMemoryCache _memoryCache;
         private OtpSettings _otpSettings = new();
         private long _counter = 0;
-        private string _loggedUser;
         private readonly string _cacheCounter = "CounterCache";
         public HOTPGeneratorService(IConfiguration configuration, IMemoryCache memoryCache)
         {
@@ -42,7 +41,7 @@ namespace HOTPExample.Application.HOTP
             int otp = binary % (int)Math.Pow(10, _otpSettings.Digit);
 
             var finalOtp = otp.ToString().PadLeft(_otpSettings.Digit, '0');
-            _memoryCache.Set(username,finalOtp,TimeSpan.FromSeconds(30));
+            _memoryCache.Set(username, finalOtp, TimeSpan.FromSeconds(30));
             return finalOtp;
         }
 
@@ -50,17 +49,16 @@ namespace HOTPExample.Application.HOTP
         {
             _memoryCache.TryGetValue(_cacheCounter, out _counter);
             string otpCache;
-            if (_memoryCache.TryGetValue("LoggedUser", out _loggedUser))
+
+            if (_memoryCache.TryGetValue(username, out otpCache))
             {
-                if (_memoryCache.TryGetValue(_loggedUser, out otpCache))
+                if (string.Equals(otp, otpCache))
                 {
-                    if (string.Equals(otp, otpCache))
-                    {
-                        _memoryCache.Set(_cacheCounter, _counter++);
-                        return true;
-                    }
+                    long cr = _counter + 1;
+                    _memoryCache.Set(_cacheCounter,cr);
+                    _memoryCache.Remove(username);
+                    return true;
                 }
-                return false;
             }
             return false;
         }
